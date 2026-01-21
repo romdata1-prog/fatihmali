@@ -15,7 +15,7 @@ Global $waypoints[0][2]  ; Dinamik dizi
 
 ; Hareket kaydı
 Global $movements[0][4]  ; [Tür, X/Tuş, Y, Zaman]
-; Tür: 0=Mouse, 1=Klavye
+; Tür: 0=Mouse Konum, 1=Klavye, 2=Mouse Button
 Global $isRecording = False
 Global $recordStart = 0
 Global $mouseSpeed = 10
@@ -95,6 +95,11 @@ While True
         ; Mouse hareketini kaydet
         If $moved Then
             _RecordMovement(0, $mousePos[0], $mousePos[1])
+        EndIf
+        
+        ; Mouse sağ butonunu kaydet
+        If _IsPressed("02") Then  ; Sağ mouse button
+            _RecordMovement(2, 2, 0)  ; Tür: 2=Mouse Button, 2=Right Button
         EndIf
         
         ; Klavye tuşlarının durumunu kontrol et (basılma/bırakma)
@@ -197,6 +202,7 @@ Func _PlaybackMacro()
     Local $totalMoves = UBound($movements)
     Local $keyStates[4] = [0, 0, 0, 0]  ; W, A, S, D basılı mı
     Local $keyNames[4] = [87, 65, 83, 68]  ; W, A, S, D
+    Local $rightMousePressed = False  ; Sağ mouse button durumu
     
     While $moveIndex < $totalMoves
         Local $elapsedTime = TimerDiff($startTime)
@@ -234,6 +240,16 @@ Func _PlaybackMacro()
                     Else
                         ; Tuş bırakıldı - KeyUp
                         Send("{" & $keyChar & " up}")
+                    EndIf
+                EndIf
+            ElseIf $type = 2 Then  ; Mouse button
+                Local $buttonCode = $movements[$moveIndex][1]
+                If $buttonCode = 2 Then  ; Sağ button
+                    $rightMousePressed = 1 - $rightMousePressed
+                    If $rightMousePressed Then
+                        MouseDown("right")
+                    Else
+                        MouseUp("right")
                     EndIf
                 EndIf
             EndIf
