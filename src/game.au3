@@ -24,7 +24,7 @@ Global $prevKeys[4] = [0, 0, 0, 0]  ; W, A, S, D önceki durumları
 ; Bilgi göster
 MsgBox(0, "Waypoint & Makro Sistemi", "Hazır!~" & @CRLF & @CRLF & _
     "Orta Tuş: Waypoint ekle~" & @CRLF & _
-    "WASD: Mouse'u hareket ettir~" & @CRLF & _
+    "WASD: Oyun kontrolü (kaydediliyor)~" & @CRLF & _
     "F7: Kaydı başla~" & @CRLF & _
     "F8: Kaydı durdur~" & @CRLF & _
     "F9: Makroyu oynat~" & @CRLF & _
@@ -70,45 +70,24 @@ While True
         Sleep(300)  ; Çift tıklamayı önle
     EndIf
     
-    ; WASD - Mouse hareketi
-    Local $mousePos = MouseGetPos()
-    Local $moved = False
-    
+    ; WASD - Tuş takibi (Mouse hareketi kaldırıldı)
     Local $keys[4] = [0, 0, 0, 0]  ; W, A, S, D
     
-    If _IsPressed("57") Then  ; W - Yukarı
-        MouseMove($mousePos[0], $mousePos[1] - $mouseSpeed, 0)
-        $moved = True
+    If _IsPressed("57") Then  ; W
         $keys[0] = 1
     EndIf
-    If _IsPressed("41") Then  ; A - Sola
-        MouseMove($mousePos[0] - $mouseSpeed, $mousePos[1], 0)
-        $moved = True
+    If _IsPressed("41") Then  ; A
         $keys[1] = 1
     EndIf
-    If _IsPressed("53") Then  ; S - Aşağı
-        MouseMove($mousePos[0], $mousePos[1] + $mouseSpeed, 0)
-        $moved = True
+    If _IsPressed("53") Then  ; S
         $keys[2] = 1
     EndIf
-    If _IsPressed("44") Then  ; D - Sağa
-        MouseMove($mousePos[0] + $mouseSpeed, $mousePos[1], 0)
-        $moved = True
+    If _IsPressed("44") Then  ; D
         $keys[3] = 1
     EndIf
     
     ; Kaydı yapıyorsa hareketi kaydet
     If $isRecording Then
-        ; Mouse hareketini kaydet
-        If $moved Then
-            _RecordMovement(0, $mousePos[0], $mousePos[1])
-        EndIf
-        
-        ; Mouse sağ butonunu kaydet
-        If _IsPressed("02") Then  ; Sağ mouse button
-            _RecordMovement(2, 2, 0)  ; Tür: 2=Mouse Button, 2=Right Button
-        EndIf
-        
         ; Klavye tuşlarının durumunu kontrol et (basılma/bırakma)
         Local $keyNames[4] = [87, 65, 83, 68]  ; W, A, S, D ASCII kodları
         For $i = 0 To 3
@@ -117,6 +96,11 @@ While True
                 $prevKeys[$i] = $keys[$i]
             EndIf
         Next
+        
+        ; Mouse sağ butonunu kaydet
+        If _IsPressed("02") Then  ; Sağ mouse button
+            _RecordMovement(2, 2, 0)  ; Tür: 2=Mouse Button, 2=Right Button
+        EndIf
     EndIf
     
     Sleep(30)
