@@ -28,6 +28,7 @@ MsgBox(0, "Waypoint & Makro Sistemi", "Hazır!~" & @CRLF & @CRLF & _
     "F7: Kaydı başla~" & @CRLF & _
     "F8: Kaydı durdur~" & @CRLF & _
     "F9: Makroyu oynat~" & @CRLF & _
+    "F10: Kaydı sıfırla~" & @CRLF & _
     "Esc: Çık")
 
 ; Ana döngü
@@ -48,6 +49,12 @@ While True
         If $isRecording Then
             _StopRecording()
         EndIf
+        Sleep(300)
+    EndIf
+    
+    ; F10 tuşu - Kaydı sıfırla
+    If _IsPressed("79") Then
+        _ResetRecording()
         Sleep(300)
     EndIf
     
@@ -165,6 +172,19 @@ Func _StopRecording()
     ToolTip("")
     
     ConsoleWrite("=== KAYIT DURDURULDU ===" & @CRLF & "Toplam hareket: " & UBound($movements) & @CRLF)
+EndFunc
+
+; Kaydı sıfırla
+Func _ResetRecording()
+    $isRecording = False
+    ReDim $movements[0][4]
+    ReDim $waypoints[0][2]
+    
+    ToolTip("KAYITLAR SILINDI! Baştan başlayabilirsiniz.", 10, 10)
+    Sleep(1500)
+    ToolTip("")
+    
+    ConsoleWrite("=== KAYITLAR SILINDI ===" & @CRLF)
 EndFunc
 
 ; Hareketi kaydet
