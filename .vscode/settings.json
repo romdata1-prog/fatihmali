@@ -1,0 +1,8 @@
+{
+    "[autoit]": {
+        "editor.defaultFormatter": "damien.autoit",
+        "editor.formatOnSave": false
+    },
+    "autoit.autoExecuteMethod": "direct",
+    "autoit.compilerPath": "C:\\Program Files (x86)\\AutoIt3\\AutoIt3.exe"
+}

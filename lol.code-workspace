@@ -1,0 +1,14 @@
+{
+    "folders": [
+        {
+            "path": "."
+        }
+    ],
+    "settings": {
+        "[autoit]": {
+            "editor.defaultFormatter": "damien.autoit",
+            "editor.formatOnSave": true
+        },
+        "autoit.executeMethod": "defaultCompiler"
+    }
+}

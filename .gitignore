@@ -1,0 +1,14 @@
+# AutoIT Project
+# Build outputs
+*.a3x
+*.exe
+
+# Editor
+.vscode/extensions.json
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Dependencies
+node_modules/
