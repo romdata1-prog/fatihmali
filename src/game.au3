@@ -6,6 +6,8 @@
     F8: Kaydı durdur
     P: Makroyu oynat (Playback)
     Esc: Çık
+    
+    [İlk Aşama] Temel yapı ve fonksiyonlar
 #ce
 
 ; Waypointler listesi
